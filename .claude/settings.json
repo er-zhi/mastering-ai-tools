@@ -1,0 +1,16 @@
+{
+  "effortLevel": "low",
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true,
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "claude-flow": {
+      "command": "npx",
+      "args": ["claude-flow@alpha", "mcp", "start"],
+      "cwd": "./ruflo"
+    }
+  }
+}
