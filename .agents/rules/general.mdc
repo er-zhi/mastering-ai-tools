@@ -1,28 +1,7 @@
 ---
-description: General development rules for this project
+description: Development rules and communication style
 alwaysApply: true
 ---
-
-<!-- All rules live in .agents/rules/. Other locations (.cursor/rules/, .claude/rules/) are symlinks only. -->
-
-# Project Overview
-
-Boilerplate for mastering AI-assisted development — Cursor AI, Claude Code, MCP servers, agent skills, and swarm orchestration. Initial implementation: Tic-Tac-Toe game.
-
-**Stack:**
-- Backend: Python 3.14 + FastAPI + SQLite
-- Frontend: Next.js + GPU-accelerated 3D libs, cyberpunk design, mobile-first
-- Infrastructure: Docker + Docker Compose, gRPC-Web (Next.js client ↔ Python server)
-
-**Planned structure:**
-```
-/backend        # FastAPI app
-/frontend       # Next.js app
-/docker         # Dockerfiles and docker-compose.yml
-/.agents/rules/ # Shared rules (symlinked to .claude/rules and .cursor/rules)
-/skills/        # Agent skills
-/mcp-servers/   # MCP server implementations
-```
 
 # Rules
 
