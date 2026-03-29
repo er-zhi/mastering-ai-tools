@@ -208,3 +208,14 @@ __marimo__/
 
 # temporary files
 .temp/
+
+# superpowers
+.superpowers/
+
+# ruflo — cloned locally, not tracked
+ruflo/
+
+# ruflo config is tracked (.ruflo/config.json), but ignore runtime state
+.ruflo/state/
+.ruflo/cache/
+.ruflo/logs/

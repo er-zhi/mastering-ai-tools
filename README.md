@@ -26,6 +26,9 @@ Skills are reusable agent behaviors stored in `.agents/skills/` (single source o
 | `finishing-a-development-branch` | When implementation is done — choose merge, PR, or cleanup |
 | `verification-before-completion` | Before claiming work is done — run commands, confirm output |
 | `writing-skills` | Creating or editing skills before deployment |
+| `database-designer` | Schema design, migrations, indexing, query optimization (SQLite/PostgreSQL) |
+| `ci-cd-pipeline-builder` | Generate GitHub Actions / GitLab CI pipelines from stack detection |
+| `dependency-auditor` | CVE scanning, license compliance, outdated dep detection across Python + Node |
 
 ### Setting up skills for Claude Code
 
@@ -90,9 +93,52 @@ Enable in Cursor: **Settings → Features → MCP Servers → toggle on**.
 
 ---
 
+## Ruflo Swarm
+
+Ruflo is installed at `./ruflo/` (gitignored) and used as the swarm orchestration engine for planning and building the pet project.
+
+### Topology: Hierarchical
+
+```
+Queen (Sonnet)
+├── Architect (Sonnet)    → system design
+├── Backend (Haiku)       → FastAPI + SQLite spec
+├── Frontend (Haiku)      → Next.js component plan
+└── API Contract (Haiku)  → gRPC-Web proto definitions
+```
+
+### Cost efficiency
+
+| Mechanism | Saving |
+|---|---|
+| 3-tier model routing (WASM → Haiku → Sonnet) | up to 75% API cost |
+| Agent Booster (WASM) for simple transforms | $0, <1ms |
+| ICOS cache profile `multi-agent` | 65-90% token reduction |
+| Token optimizer (pattern retrieval + batching) | 30-50% tokens |
+
+### Setup
+
+```bash
+git clone https://github.com/ruvnet/ruflo ruflo
+cd ruflo && npm install
+cd ..
+CLAUDE_CODE_ENABLE_TELEMETRY=1 npx ruflo@latest init --wizard
+```
+
+Config lives in `.ruflo/config.json` — tracked in this repo. See `docs/superpowers/specs/2026-03-29-ruflo-swarm-setup-design.md` for full design.
+
+### Monitor costs
+
+```bash
+analysis claude-cost        # session cost breakdown
+analysis token-usage        # per-agent token consumption
+```
+
+---
+
 ## Stack
 
 - **Backend**: Python 3.14 + FastAPI + SQLite
 - **Frontend**: Next.js + 3D GPU-accelerated rendering
-- **Transport**: Docker + gRPC-Web
+- **Transport**: Docker + gRPC-Web (Next.js client ↔ Python server)
 - **Initial app**: Tic-Tac-Toe (learning/demo)
