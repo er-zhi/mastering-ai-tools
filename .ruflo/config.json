@@ -1,0 +1,22 @@
+{
+  "swarm": {
+    "topology": "hierarchical",
+    "maxAgents": 6,
+    "cacheProfile": "multi-agent",
+    "consensus": "raft"
+  },
+  "routing": {
+    "tiers": {
+      "wasm":   { "complexityMax": 10,  "cost": "$0",      "latency": "<1ms"   },
+      "haiku":  { "complexityMax": 30,  "cost": "$0.0002", "latency": "~500ms" },
+      "sonnet": { "complexityMax": 100, "cost": "$0.003",  "latency": "2-5s"   }
+    }
+  },
+  "agents": {
+    "queen":        { "model": "claude-sonnet-4-6", "priority": "high"   },
+    "architect":    { "model": "claude-sonnet-4-6", "priority": "high"   },
+    "backend":      { "model": "claude-haiku-4-5",  "priority": "medium" },
+    "frontend":     { "model": "claude-haiku-4-5",  "priority": "medium" },
+    "api-contract": { "model": "claude-haiku-4-5",  "priority": "medium" }
+  }
+}
