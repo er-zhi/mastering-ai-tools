@@ -136,6 +136,61 @@ analysis token-usage        # per-agent token consumption
 
 ---
 
+## RTK (Token Optimization)
+
+[RTK](https://github.com/rtk-ai/rtk) (Rust Token Killer) is a CLI proxy that reduces LLM token consumption by 60-90%. It intercepts command output before it reaches the AI context window and compresses it via smart filtering, grouping, truncation, and deduplication.
+
+### Why RTK
+
+AI-assisted coding sessions burn tokens fast — a 30-minute Claude Code session can consume ~118K tokens of CLI output alone. RTK cuts that to ~24K. Less tokens means:
+
+- **Lower cost** — fewer input tokens = smaller API bill
+- **More context** — compressed output leaves room for actual code and reasoning
+- **Faster responses** — smaller context = lower latency
+
+### Measured savings
+
+| Command | Token Reduction |
+|---|---|
+| `git status` | ~83% |
+| `ls` (directory listing) | ~76% |
+| `npm test` / `cargo test` | ~90% |
+| `docker ps` | ~80% |
+
+### Setup (global, for Claude Code)
+
+```bash
+brew install rtk
+rtk init -g
+```
+
+This installs a `PreToolUse` hook that auto-rewrites Bash commands. Add the hook to `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{ "type": "command",
+        "command": "~/.claude/hooks/rtk-rewrite.sh"
+      }]
+    }]
+  }
+}
+```
+
+Restart Claude Code after setup.
+
+### Monitor savings
+
+```bash
+rtk gain       # global token savings breakdown
+rtk session    # per-session stats
+rtk discover   # find missed optimization opportunities
+```
+
+---
+
 ## Stack
 
 - **Backend**: Python 3.14 + FastAPI + SQLite
